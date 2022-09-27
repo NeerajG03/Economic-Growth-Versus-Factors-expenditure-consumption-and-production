@@ -21,7 +21,7 @@ health_data =health_data[health_data.Year >=1990]
 data = pd.merge(pd.merge(energy_data , meat_data, on=['Code', 'Year']), health_data , on=['Code' , 'Year'])
 
 #for training purpose select USA and check correlation between GDP and different caategories
-data =data.loc[data['Code'].isin(["USA","IND"])]             # add countries of your choice. 
+data =data.loc[data['Code'].isin(["USA"])]             # add countries of your choice. 
 
 # automatic filling of na values with ffill and bfill values between two points grouped by country for rest of the data
 # data = data.interpolate()   
@@ -39,11 +39,11 @@ with pd.option_context('display.max_rows', None,
                             print(data)
 
 #checking the null values
-print(data.isnull().sum())
+# print(data.isnull().sum())
 
 x = data.loc[:,"Energy_use "]         #0.62 -> moderately correlated
 y = data.loc[:,"Meat_quantity"]         #0.275 -> Weakly  correlated
 z = data.loc[:,"health_expenditure"]    #0.97 ->strongly correlated
 g = data.loc[:,"GDP "]        
-print(np.corrcoef(z,g))
+print(np.corrcoef(y,g))
 
