@@ -10,21 +10,18 @@ health_data =pd.read_csv("healthcare-expenditure-vs-gdp.csv",na_values = missing
 
 #extracting the data between 1990 -2020 and droping the redundant columns
 energy_data = energy_data.drop(['GDP ','Population', 'Continent'],axis =1)
-energy_length = energy_data.Year >=1990
-energy_data = energy_data[energy_length]
+energy_data = energy_data[energy_data.Year >=1990]
 meat_data = meat_data.drop(['Entity', 'GDP ','Population', 'Continent'],axis =1)
-meat_length = meat_data.Year >=1990
-meat_data = meat_data[meat_length]
+meat_data = meat_data[meat_data.Year >=1990]
 health_data = health_data.drop(['Entity','Population', 'Continent'],axis =1)
-health_length = health_data.Year >=1990
-health_data =health_data[health_length]
+health_data =health_data[health_data.Year >=1990]
 
 
 #MERGING ALL 3 DATASETs
 data = pd.merge(pd.merge(energy_data , meat_data, on=['Code', 'Year']), health_data , on=['Code' , 'Year'])
 
 #for training purpose select USA and check correlation between GDP and different caategories
-data =data.loc[data['Code'].isin(["USA"])]             # add countries of your choice. 
+data =data.loc[data['Code'].isin(["USA","IND"])]             # add countries of your choice. 
 
 # automatic filling of na values with ffill and bfill values between two points grouped by country for rest of the data
 # data = data.interpolate()   
